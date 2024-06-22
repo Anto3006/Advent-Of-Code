@@ -1,13 +1,12 @@
 use md5;
-use std::process;
 
 fn main() {
     let number_zeros = 6;
-    let value = calculate_min_MD5_zeros("bgvyzdsv", number_zeros);
+    let value = calculate_min_md5_zeros("bgvyzdsv", number_zeros);
     println!("The minimum number to obtain a hash with {number_zeros} zeros at the beginning of the hexadecimal representation is {value}");
 }
 
-fn calculate_min_MD5_zeros(key: &str, number_zeros: u32) -> u32 {
+fn calculate_min_md5_zeros(key: &str, number_zeros: u32) -> u32 {
     let mut number = 0;
     let mut found_zeros_required = false;
     while !found_zeros_required {
@@ -44,7 +43,7 @@ mod tests {
         let key_1 = "abcdef";
         let key_2 = "pqrstuv";
 
-        assert_eq!(calculate_min_MD5_zeros(key_1, 5), 609043);
-        assert_eq!(calculate_min_MD5_zeros(key_2, 5), 1048970);
+        assert_eq!(calculate_min_md5_zeros(key_1, 5), 609043);
+        assert_eq!(calculate_min_md5_zeros(key_2, 5), 1048970);
     }
 }
