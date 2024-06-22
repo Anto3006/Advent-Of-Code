@@ -18,6 +18,11 @@ name = "day_2"
 path = "src/day_2.rs"
 test = true
 
+[[bin]]
+name = "day_3"
+path = "src/day_3.rs"
+test = true
+
 [dependencies]
 
 
