@@ -46,6 +46,16 @@ pub fn split_string(string_to_split: &str, sep: &str) -> Vec<String> {
     tokens
 }
 
+pub fn is_numeric(str: &str) -> bool {
+    let mut only_numeric = true;
+    for c in str.chars() {
+        if !c.is_numeric() {
+            only_numeric = false;
+        }
+    }
+    only_numeric
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
