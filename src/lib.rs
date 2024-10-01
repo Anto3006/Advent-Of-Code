@@ -56,6 +56,30 @@ pub fn is_numeric(str: &str) -> bool {
     only_numeric
 }
 
+pub fn generate_permutations<T: Clone>(data: &Vec<T>) -> Vec<Vec<T>> {
+    fn generate<T: Clone>(k: usize, vector: &mut Vec<T>) -> Vec<Vec<T>> {
+        if k == 1 {
+            return vec![vector.clone()];
+        } else {
+            let mut first = generate(k - 1, vector);
+            for i in 0..(k - 1) {
+                if k % 2 == 0 {
+                    let temp = vector[i].clone();
+                    vector[i] = vector[k - 1].clone();
+                    vector[k - 1] = temp;
+                } else {
+                    let temp = vector[0].clone();
+                    vector[0] = vector[k - 1].clone();
+                    vector[k - 1] = temp;
+                }
+                first.extend(generate(k - 1, vector));
+            }
+            return first;
+        }
+    }
+    generate(data.len(), &mut data.clone())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

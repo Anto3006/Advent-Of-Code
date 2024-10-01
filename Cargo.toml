@@ -68,6 +68,11 @@ name = "day_12"
 path = "src/day_12.rs"
 test = true
 
+[[bin]]
+name = "day_13"
+path = "src/day_13.rs"
+test = true
+
 [dependencies]
 md5 = "0.7.0"
 
