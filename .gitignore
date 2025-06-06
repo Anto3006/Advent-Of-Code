@@ -1,2 +1,4 @@
-/target
-/inputs
+*/rust/target
+*/rust/inputs
+*/c/target
+*/c/inputs
