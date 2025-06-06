@@ -1,0 +1,170 @@
+pub fn split_string(string_to_split: &str, sep: &str) -> Vec<String> {
+    let mut buffer = String::new();
+    let mut str_iter = string_to_split.chars();
+    let mut sep_iter = sep.chars();
+    let first_sep_char = sep_iter.next().unwrap();
+    let mut tokens: Vec<String> = Vec::new();
+    while let Some(c) = str_iter.next() {
+        if c == first_sep_char {
+            let mut matching_sep_buffer = String::new();
+            matching_sep_buffer.push(c);
+            let mut matching = true;
+            while matching {
+                match (str_iter.next(), sep_iter.next()) {
+                    (Some(str_c), Some(sep_c)) => {
+                        if sep_c != str_c {
+                            matching = false;
+                        }
+                        matching_sep_buffer.push(str_c);
+                    }
+                    (None, Some(_)) => matching = false,
+                    (Some(str_c), None) => {
+                        tokens.push(buffer.clone());
+                        buffer.clear();
+                        buffer.push(str_c);
+                        break;
+                    }
+                    (None, None) => {
+                        tokens.push(buffer.clone());
+                        buffer.clear();
+                        break;
+                    }
+                }
+            }
+            if !matching {
+                buffer.push_str(&matching_sep_buffer.clone());
+            }
+            sep_iter = sep.chars();
+            sep_iter.next();
+        } else {
+            buffer.push(c);
+        }
+    }
+    if !buffer.is_empty() {
+        tokens.push(buffer.clone());
+    }
+    tokens
+}
+
+pub fn is_numeric(str: &str) -> bool {
+    let mut only_numeric = true;
+    for c in str.chars() {
+        if !c.is_numeric() {
+            only_numeric = false;
+        }
+    }
+    only_numeric
+}
+
+pub fn generate_permutations<T: Clone>(data: &Vec<T>) -> Vec<Vec<T>> {
+    fn generate<T: Clone>(k: usize, vector: &mut Vec<T>) -> Vec<Vec<T>> {
+        if k == 1 {
+            return vec![vector.clone()];
+        } else {
+            let mut first = generate(k - 1, vector);
+            for i in 0..(k - 1) {
+                if k % 2 == 0 {
+                    let temp = vector[i].clone();
+                    vector[i] = vector[k - 1].clone();
+                    vector[k - 1] = temp;
+                } else {
+                    let temp = vector[0].clone();
+                    vector[0] = vector[k - 1].clone();
+                    vector[k - 1] = temp;
+                }
+                first.extend(generate(k - 1, vector));
+            }
+            return first;
+        }
+    }
+    generate(data.len(), &mut data.clone())
+}
+
+pub fn replace_substring(
+    string: &str,
+    old_str: &str,
+    new_str: &str,
+    number: Option<usize>,
+) -> String {
+    let mut result = String::new();
+    let mut count = 0;
+    let mut str_iter = string.chars();
+    let mut old_iter = old_str.chars();
+    let first_old_char = old_iter.next().unwrap();
+    let mut is_string_finished = false;
+    let mut get_new_char = true;
+    let mut next = None;
+    while !is_string_finished {
+        if get_new_char {
+            next = str_iter.next();
+        }
+        if next != None {
+            let c = next.unwrap();
+            if c == first_old_char {
+                let mut buffer = String::new();
+                buffer.push(c);
+                let mut matching = true;
+                while matching {
+                    match (str_iter.next(), old_iter.next()) {
+                        (Some(str_c), Some(old_c)) => {
+                            if str_c != old_c {
+                                matching = false;
+                                next = Some(str_c);
+                                get_new_char = false;
+                            } else {
+                                buffer.push(str_c);
+                            }
+                        }
+                        (None, Some(_)) => matching = false,
+                        (Some(str_c), None) => {
+                            count += 1;
+                            get_new_char = false;
+                            next = Some(str_c);
+                            if number == None || count == number.unwrap() {
+                                result.extend(new_str.chars());
+                            } else {
+                            }
+                            break;
+                        }
+                        (None, None) => {
+                            count += 1;
+                            if number == None || count == number.unwrap() {
+                                result.extend(new_str.chars());
+                            }
+                        }
+                    }
+                }
+            } else {
+                result.push(c);
+            }
+        }
+        if number != None && count == number.unwrap() {
+            result.extend(str_iter);
+            break;
+        }
+    }
+    result
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn split_single_char() {
+        let split_result = split_string("This is a test of splitting", " ");
+        assert_eq!(
+            vec!["This", "is", "a", "test", "of", "splitting"],
+            split_result
+        );
+    }
+
+    #[test]
+    fn split_multi_char() {
+        let split_result = split_string("This|||is|||an|||example|||of|||splitting|||", "|||");
+        assert_eq!(
+            vec!["This", "is", "an", "example", "of", "splitting"],
+            split_result
+        )
+    }
+}
