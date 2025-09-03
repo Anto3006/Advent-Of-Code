@@ -1,6 +1,8 @@
 */rust/target
 */rust/inputs
 
+*/go/inputs/*.txt
+
 ## C gitignore
 
 */c/bin
