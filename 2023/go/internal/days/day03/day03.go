@@ -1,10 +1,25 @@
-package main
+package day03
 
 import (
-	"fmt"
-	"os"
+	"aoc_2023/internal/aoc"
 	"unicode"
 )
+
+func init() {
+	aoc.Register(3, solver{})
+}
+
+type solver struct{}
+
+func (solver) Part1(input string) any {
+	var matrix [][]rune = loadMatrix(string(input))
+	return sumNumbersNearSymbols(matrix)
+}
+
+func (solver) Part2(input string) any {
+	var matrix [][]rune = loadMatrix(string(input))
+	return sumGearRatio(matrix)
+}
 
 func check(e error) {
 	if e != nil {
@@ -130,12 +145,4 @@ func checkNeighborsSymbol(matrix [][]rune, row int, col int) bool {
 		}
 	}
 	return isNeighborSymbol
-}
-
-func main() {
-	data, err := os.ReadFile("input.txt")
-	check(err)
-	var matrix [][]rune = loadMatrix(string(data))
-	fmt.Println(sumNumbersNearSymbols(matrix))
-	fmt.Println(sumGearRatio(matrix))
 }

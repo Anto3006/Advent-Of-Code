@@ -18,7 +18,7 @@ var (
 func main() {
 	flag.Parse()
 
-	solver, ok := aoc.Get(*day)
+	solver, ok := aoc.GetSolver(*day)
 	if !ok {
 		fmt.Fprintf(os.Stderr, "No solver for day %d\n", *day)
 		os.Exit(1)
@@ -27,12 +27,12 @@ func main() {
 	var input string
 
 	if *file != "" {
-		b := aoc.Must(os.ReadFile(*file))
-		input = string(b)
+		file_content := aoc.Must(os.ReadFile(*file))
+		input = string(file_content)
 	} else {
 		type hasInput interface{ Input() string }
-		if hi, ok := solver.(hasInput); ok {
-			input = hi.Input()
+		if has_input, ok := solver.(hasInput); ok {
+			input = has_input.Input()
 		} else {
 			fmt.Fprintln(os.Stderr, "No embedded input file; pass -file")
 			os.Exit(2)
@@ -41,16 +41,16 @@ func main() {
 
 	input = strings.TrimRight(input, "\n\r")
 
-	var ans any
+	var answer any
 	switch *part {
 	case 1:
-		ans = solver.Part1(input)
+		answer = solver.Part1(input)
 	case 2:
-		ans = solver.Part2(input)
+		answer = solver.Part2(input)
 	default:
 		fmt.Fprintln(os.Stderr, "-part must be 1 or 2")
 		os.Exit(3)
 	}
 
-	fmt.Println(ans)
+	fmt.Println(answer)
 }

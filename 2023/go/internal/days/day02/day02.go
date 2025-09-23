@@ -1,10 +1,40 @@
-package main
+package day02
 
 import (
+	"aoc_2023/internal/aoc"
 	"fmt"
-	"os"
 	"strconv"
 )
+
+func init() {
+	aoc.Register(2, solver{})
+}
+
+type solver struct{}
+
+func main() {
+}
+
+func (solver) Part1(input string) any {
+	lines := split(string(input), '\n')
+	idSum := 0
+	redCubes := 12
+	blueCubes := 14
+	greenCubes := 13
+	for _, line := range lines {
+		idSum += checkPossibleGame(line, redCubes, blueCubes, greenCubes)
+	}
+	return idSum
+}
+
+func (solver) Part2(input string) any {
+	lines := split(string(input), '\n')
+	powerSum := 0
+	for _, line := range lines {
+		powerSum += powerSetCubesGame(line)
+	}
+	return powerSum
+}
 
 func check(e error) {
 	if e != nil {
@@ -123,23 +153,4 @@ func checkPossibleGame(line string, redCubes int, blueCubes int, greenCubes int)
 		return 0
 	}
 
-}
-
-func main() {
-	data, err := os.ReadFile("input.txt")
-	check(err)
-	lines := split(string(data), '\n')
-	idSum := 0
-	powerSum := 0
-	redCubes := 12
-	blueCubes := 14
-	greenCubes := 13
-	for _, line := range lines {
-		idSum += checkPossibleGame(line, redCubes, blueCubes, greenCubes)
-	}
-	for _, line := range lines {
-		powerSum += powerSetCubesGame(line)
-	}
-	fmt.Println("Sum id possible", idSum)
-	fmt.Println("Sum power cubes", powerSum)
 }

@@ -1,8 +1,7 @@
-package main
+package day04
 
 import (
-	"fmt"
-	"os"
+	"aoc_2023/internal/aoc"
 	"strconv"
 )
 
@@ -10,6 +9,44 @@ type scratchcard struct {
 	id             int
 	winningNumbers []int
 	cardNumbers    []int
+}
+
+func init() {
+	aoc.Register(4, solver{})
+}
+
+type solver struct{}
+
+func (solver) Part1(input string) any {
+	cardLines := split(string(input), '\n')
+	total_value := 0
+
+	for _, cardLine := range cardLines {
+		card := createScratchcardFromLine(cardLine)
+		winningNumbersInCard := card.obtainWinningNumbersInCard()
+		card_value := 0
+		if len(winningNumbersInCard) > 0 {
+			card_value = powerOfTwo(len(winningNumbersInCard) - 1)
+		}
+		total_value += card_value
+	}
+	return total_value
+}
+
+func (solver) Part2(input string) any {
+	cardLines := split(string(input), '\n')
+	cardCopies := make([]int, len(cardLines))
+
+	for pos, cardLine := range cardLines {
+		card := createScratchcardFromLine(cardLine)
+		winningNumbersInCard := card.obtainWinningNumbersInCard()
+		cardCopies[pos] += 1
+		copies := cardCopies[pos]
+		for additionalCard := 1; additionalCard <= len(winningNumbersInCard) && pos+additionalCard < len(cardCopies); additionalCard++ {
+			cardCopies[pos+additionalCard] += copies
+		}
+	}
+	return sumList(cardCopies)
 }
 
 func (sc *scratchcard) obtainWinningNumbersInCard() []int {
@@ -113,22 +150,4 @@ func sumList(list []int) int {
 		sum += value
 	}
 	return sum
-}
-
-func main() {
-	data, err := os.ReadFile("input.txt")
-	check(err)
-	cardLines := split(string(data), '\n')
-	cardCopies := make([]int, len(cardLines))
-
-	for pos, cardLine := range cardLines {
-		card := createScratchcardFromLine(cardLine)
-		winningNumbersInCard := card.obtainWinningNumbersInCard()
-		cardCopies[pos] += 1
-		copies := cardCopies[pos]
-		for additionalCard := 1; additionalCard <= len(winningNumbersInCard) && pos+additionalCard < len(cardCopies); additionalCard++ {
-			cardCopies[pos+additionalCard] += copies
-		}
-	}
-	fmt.Println(sumList(cardCopies))
 }

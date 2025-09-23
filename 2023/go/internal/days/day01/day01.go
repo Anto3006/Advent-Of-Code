@@ -16,7 +16,8 @@ func (solver) Part1(input string) any {
 	calibrationSum := 0
 	useOnlyDigits := true
 	for _, match := range splits {
-		calibrationSum += obtainCalibration(match, useOnlyDigits)
+		calibration := obtainCalibration(match, useOnlyDigits)
+		calibrationSum += calibration
 	}
 	return calibrationSum
 }
@@ -101,5 +102,6 @@ func split(text string, char rune) []string {
 			initial_pos = pos + 1
 		}
 	}
+	splits = append(splits, text[initial_pos:len(text)])
 	return splits
 }

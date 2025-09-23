@@ -7,16 +7,16 @@ type Solver interface {
 	Part2(input string) any
 }
 
-var reg = map[int]Solver{}
+var solver_registry = map[int]Solver{}
 
-func Register(day int, s Solver) {
-	if _, exists := reg[day]; exists {
+func Register(day int, solver Solver) {
+	if _, exists := solver_registry[day]; exists {
 		panic(fmt.Sprintf("duplicate solver for %02d", day))
 	}
-	reg[day] = s
+	solver_registry[day] = solver
 }
 
-func Get(day int) (Solver, bool) {
-	s, ok := reg[day]
-	return s, ok
+func GetSolver(day int) (Solver, bool) {
+	solver, ok := solver_registry[day]
+	return solver, ok
 }
