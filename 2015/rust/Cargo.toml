@@ -109,6 +109,11 @@ path = "src/day_20.rs"
 test = true
 
 [[bin]]
+name = "day_21"
+path = "src/day_21.rs"
+test = true
+
+[[bin]]
 name = "day_22"
 path = "src/day_22.rs"
 test = true
