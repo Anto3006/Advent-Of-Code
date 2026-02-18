@@ -5,7 +5,8 @@
 Solution *create_solution_array(){
 	Solution *solution_array = calloc(SOLUTION_COUNT, sizeof(Solution));
 	solution_array[0] = create_day_01_solution();
-	for(size_t pos = 1; pos < SOLUTION_COUNT; ++pos){
+	solution_array[1] = create_day_02_solution();
+	for(size_t pos = 2; pos < SOLUTION_COUNT; ++pos){
 		Solution sol;
 		sol.test_input = 0;
 		sol.part_1 = 0;

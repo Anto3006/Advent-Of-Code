@@ -3,7 +3,7 @@
 #include "stdio.h"
 #include "stdbool.h"
 
-const char* test_input =
+static const char* test_input =
 	"L68\n"
 	"L30\n"
 	"R48\n"
