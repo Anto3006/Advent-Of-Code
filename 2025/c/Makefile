@@ -10,6 +10,7 @@ all: \
 	utilities \
 	day_01 \
 	day_02 \
+	day_03 \
 	solution \
 	main
 
@@ -31,9 +32,12 @@ day_01: src/day_01.c
 day_02: src/day_02.c
 	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
 
+day_03: src/day_03.c
+	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+
 solution: src/solution.c
 	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
 
 main: src/main.c
 	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-	$(CC) $(CFLAGS) $(BUILD_DIR)/$@.o $(BUILD_DIR)/map.o $(BUILD_DIR)/argument_reader.o $(BUILD_DIR)/string.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/day_01.o $(BUILD_DIR)/day_02.o $(BUILD_DIR)/solution.o -o $(EXEC_DIR)/$@
+	$(CC) $(CFLAGS) $(BUILD_DIR)/$@.o $(BUILD_DIR)/map.o $(BUILD_DIR)/argument_reader.o $(BUILD_DIR)/string.o $(BUILD_DIR)/utilities.o $(BUILD_DIR)/day_01.o $(BUILD_DIR)/day_02.o $(BUILD_DIR)/day_03.o $(BUILD_DIR)/solution.o -o $(EXEC_DIR)/$@

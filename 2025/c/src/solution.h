@@ -14,6 +14,7 @@ typedef struct {
 
 Solution create_day_01_solution();
 Solution create_day_02_solution();
+Solution create_day_03_solution();
 void run_solution(Solution *solutions, uint32_t day, uint32_t part, const char* input);
 Solution *create_solution_array();
 

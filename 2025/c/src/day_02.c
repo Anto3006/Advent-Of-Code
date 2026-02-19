@@ -2,8 +2,6 @@
 #include "stdint.h"
 #include "stdio.h"
 #include "stdbool.h"
-#include "stdint.h"
-#include <stdint.h>
 
 typedef struct {
 	uint32_t upper_half;
