@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 
 	char *file_addr = get_value(&arg_reader.argument_map, "-f");
 	char *input = 0;
-	if(file_addr != 0){
+	if(file_addr != 0 && !is_str_eq(file_addr,"")){
 		input = read_file(file_addr, 1024, 2);
 	}
 	Solution *solutions = create_solution_array();
