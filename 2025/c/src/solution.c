@@ -7,7 +7,8 @@ Solution *create_solution_array(){
 	solution_array[0] = create_day_01_solution();
 	solution_array[1] = create_day_02_solution();
 	solution_array[2] = create_day_03_solution();
-	for(size_t pos = 3; pos < SOLUTION_COUNT; ++pos){
+	solution_array[3] = create_day_04_solution();
+	for(size_t pos = 4; pos < SOLUTION_COUNT; ++pos){
 		Solution sol;
 		sol.test_input = 0;
 		sol.part_1 = 0;

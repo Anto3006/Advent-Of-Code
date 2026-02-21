@@ -44,6 +44,7 @@ bool is_str_integer(const char *string){
 			found_non_numeric_char = true;
 			break;
 		}
+		pos++;
 	}
 	return !found_non_numeric_char;
 }
