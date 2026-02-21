@@ -18,7 +18,11 @@ static size_t polynomial_rolling_hash(const char *string){
 }
 
 static int append_at_end(LinkedListPairElement *node, const char* key, const char* value){
-	if (node->next == NULL){
+	if (is_str_eq(node->key, key)){
+		free(node->value);
+		node->value = str_copy(value);
+		return 0;
+	} else if (node->next == NULL){
 		LinkedListPairElement *new_element = malloc(sizeof(LinkedListPairElement));
 		if (new_element == NULL){
 			return 1;
@@ -29,11 +33,6 @@ static int append_at_end(LinkedListPairElement *node, const char* key, const cha
 		node->next = new_element;
 		return 0;
 	} else {
-		if (is_str_eq(node->key, key)){
-			free(node->value);
-			node->value = str_copy(value);
-			return 0;
-		}
 		return append_at_end(node->next,key,value);
 	}
 }
@@ -120,7 +119,7 @@ char* get_value(MapStringString *map, const char *key){
 	return value;
 }
 bool contains_key(MapStringString *map, const char *key){
-	size_t hash_value = map->hash_function(key);
+	size_t hash_value = map->hash_function(key) % map->hash_table.length;
 	bool is_key_contained = is_key_in_linked_list(&map->hash_table.array[hash_value], key);
 	return is_key_contained;
 }

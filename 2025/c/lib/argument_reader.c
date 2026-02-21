@@ -26,6 +26,9 @@ void read_arguments(ArgumentReader *argument_reader, char **args, size_t argc){
 		}
 		arg_pos += 1;
 	}
+	if(found_argument_name){
+		insert(&argument_reader->argument_map, arg_name, "");
+	}
 }
 
 ArgumentReader new_argument_reader(){

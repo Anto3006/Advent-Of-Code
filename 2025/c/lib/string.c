@@ -35,3 +35,15 @@ bool is_str_eq(const char *string, const char *other){
 		return false;
 	}
 }
+
+bool is_str_integer(const char *string){
+	bool found_non_numeric_char = false;
+	size_t pos = 0;
+	while(string[pos] != '\0'){
+		if(string[pos] < '0' || string[pos] > '9'){
+			found_non_numeric_char = true;
+			break;
+		}
+	}
+	return !found_non_numeric_char;
+}
