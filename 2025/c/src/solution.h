@@ -12,13 +12,13 @@ typedef struct {
 } Solution;
 
 
-Solution create_day_01_solution();
-Solution create_day_02_solution();
-Solution create_day_03_solution();
-Solution create_day_04_solution();
-Solution create_day_05_solution();
+Solution create_day_01_solution(void);
+Solution create_day_02_solution(void);
+Solution create_day_03_solution(void);
+Solution create_day_04_solution(void);
+Solution create_day_05_solution(void);
 void run_solution(Solution *solutions, uint32_t day, uint32_t part, const char* input);
-Solution *create_solution_array();
+Solution *create_solution_array(void);
 
 #endif
 

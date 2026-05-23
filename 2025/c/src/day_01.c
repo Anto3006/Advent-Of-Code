@@ -108,7 +108,7 @@ static void part_2(const char *input){
 	printf("Result: %d\n",count);
 }
 
-Solution create_day_01_solution(){
+Solution create_day_01_solution(void){
 	Solution solution;
 	solution.part_1 = part_1;
 	solution.part_2 = part_2;

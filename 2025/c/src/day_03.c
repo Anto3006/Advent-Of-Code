@@ -77,7 +77,7 @@ static void part_2(const char *input){
 	printf("Result: %ld\n",sum);
 }
 
-Solution create_day_03_solution(){
+Solution create_day_03_solution(void){
 	Solution solution;
 	solution.part_1 = part_1;
 	solution.part_2 = part_2;

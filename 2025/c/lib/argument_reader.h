@@ -8,5 +8,5 @@ typedef struct {
 } ArgumentReader;
 
 void read_arguments(ArgumentReader *argument_reader, char** args, size_t argc);
-ArgumentReader new_argument_reader();
+ArgumentReader new_argument_reader(void);
 #endif

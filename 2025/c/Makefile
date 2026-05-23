@@ -1,62 +1,31 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wfloat-equal -Wundef -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wstrict-overflow -Wwrite-strings -std=c2x -g
-BUILD_DIR := ./build
-EXEC_DIR := ./bin
+BUILD_DIR := build
+EXEC_DIR := bin
+SRC_DIR := src
+LIB_DIR := lib
 
-all: \
-	map \
-	argument_reader \
-	string \
-	utilities \
-	day_01 \
-	day_02 \
-	day_03 \
-	day_04 \
-	day_05 \
-	solution \
-	main
+SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
+SRC_OBJ := $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+LIB_FILES := $(wildcard $(LIB_DIR)/*.c)
+LIB_OBJ := $(LIB_FILES:$(LIB_DIR)/%.c=$(BUILD_DIR)/%.o)
 
-map: lib/map.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
 
-argument_reader: lib/argument_reader.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+all: $(EXEC_DIR) $(BUILD_DIR) $(LIB_OBJ) $(SRC_OBJ)
+	$(CC) $(CFLAGS) $(LIB_OBJ) $(SRC_OBJ) -o $(EXEC_DIR)/main
 
-string: lib/string.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-utilities: lib/utilities.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+$(BUILD_DIR)/%.o: $(LIB_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-day_01: src/day_01.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+$(EXEC_DIR):
+	mkdir $(EXEC_DIR)
 
-day_02: src/day_02.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
+$(BUILD_DIR):
+	mkdir $(BUILD_DIR)
 
-day_03: src/day_03.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-
-day_04: src/day_04.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-
-day_05: src/day_05.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-
-solution: src/solution.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-
-main: src/main.c
-	$(CC) $(CFLAGS) -c $< -o $(BUILD_DIR)/$@.o
-	$(CC) $(CFLAGS) $(BUILD_DIR)/$@.o \
-	$(BUILD_DIR)/map.o \
-	$(BUILD_DIR)/argument_reader.o \
-	$(BUILD_DIR)/string.o \
-	$(BUILD_DIR)/utilities.o \
-	$(BUILD_DIR)/day_01.o \
-	$(BUILD_DIR)/day_02.o \
-	$(BUILD_DIR)/day_03.o \
-	$(BUILD_DIR)/day_04.o \
-	$(BUILD_DIR)/day_05.o \
-	$(BUILD_DIR)/solution.o \
-	-o $(EXEC_DIR)/$@
+clean:
+	rm -r $(EXEC_DIR)
+	rm -r $(BUILD_DIR)
