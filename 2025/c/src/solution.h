@@ -18,6 +18,7 @@ Solution create_day_03_solution(void);
 Solution create_day_04_solution(void);
 Solution create_day_05_solution(void);
 Solution create_day_06_solution(void);
+Solution create_day_07_solution(void);
 void run_solution(Solution *solutions, uint32_t day, uint32_t part, const char* input);
 Solution *create_solution_array(void);
 
